@@ -1,0 +1,128 @@
+﻿@model abc.ViewModels.ViewApplicantsViewmodel
+@{
+    ViewBag.Title = "ViewJobApplicantsCompleteInfo";
+    Layout = "~/Views/Shared/_LayoutPageAdmin.cshtml";
+}
+
+
+    
+    <!--Personal Information-->
+    
+<div class="col-md-12">
+    <!-- TABLE: LATEST ORDERS -->
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h2 class="page-header">
+                <i class="fa fa-user"></i>@Model.UserRegistration_UserName
+                <small class="pull-right">Job Apply Date:@Model.JobApplieds[0].JobApplied_ApplyDate.ToShortDateString()</small>
+            </h2>
+            <div class="box-tools pull-right">
+                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+        </div><!-- /.box-header -->
+        <div class="box-body ">
+            <div class="row User-information ">
+                <div class="col-sm-4">
+                    Personal Information
+                    <details>
+                        <summary>User's Personal Details</summary>
+
+                        <b>First Name</b>@Model.PersonalInformations[0].PersonalInformation_FirstName<br />
+                        <b>Last Name</b>@Model.PersonalInformations[0].PersonalInformation_LastName<br />
+                        <b>Date of Birth</b>@Model.PersonalInformations[0].PersonalInformation_DateOfBirth<br />
+                        <b>Gender</b>@Model.PersonalInformations[0].PersonalInformation_Gender<br />
+                        <b>Maritial Status</b>@Model.PersonalInformations[0].PersonalInformation_MaritialStatus<br />
+
+
+                    </details>
+                </div>
+                <div class="col-sm-4">
+                    Contact Information
+                    <details>
+                        <summary>User's Contact Detail</summary>
+
+                        <b>State Name</b>@Model.ContactInformations[0].State.State_Name<br />
+                        <b>City Name</b>@Model.ContactInformations[0].City.City_Name<br />
+                        <b>Address</b>@Model.ContactInformations[0].ContactInformation_Address<br />
+                        <b>Mobile Number</b>@Model.ContactInformations[0].ContactInformation_MobileNo<br />
+                        <b>Alternate Mobile</b>@Model.ContactInformations[0].ContactInformation_AlternateMobileNo<br />
+                        <b>E-mail Address</b>@Model.ContactInformations[0].ContactInformation_EmailId<br />
+
+                    </details>
+                </div>
+                <div class="col-sm-4"></div>
+            </div>
+
+
+            <div class="row">
+            <div class="table-responsive col-md-12">
+                <table class="table no-margin table-condensed">
+                    <caption style="font-size:medium;text-align:center">Qualification Information</caption>
+                    <thead>
+                        <tr>
+                            <th>Degree Category</th>
+                            <th>Degree Type</th>
+                            <th>Stream</th>
+                            <th>Board/University</th>
+                            <th>Passing Year</th>
+                            <th>Percentage</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            foreach (var item in @Model.Qualifications)
+                            {
+                    <tr>
+                        <td>@item.EducationCategory.Education_CategoryName</td>
+                        <td>@item.EducationType.EducationType_Name</td>
+                        <td>@item.EducationSubType.EducationSubType_Name</td>
+                        <td>@item.Qualification_BoardUniversity</td>
+                        <td>@item.Qualification_PassingYear</td>
+                        <td>@item.Qualification_Percentage</td>
+                    </tr>
+                            }
+                        }
+
+
+                    </tbody>
+                </table>
+            </div>
+                </div>
+            <div class="row">
+            <div class="table-responsive col-md-12">
+                <table class="table no-margin table-condensed">
+                    <caption style="font-size:medium;text-align:center">Work Experience Information</caption>
+                    <thead>
+                        <tr>
+                            <th>Company Name</th>
+                            <th>Designation</th>
+                            <th>From Date</th>
+                            <th>To Date</th>
+                            <th>Address</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                                            foreach (var item in @Model.WorkExperiences)
+                                            {
+                    <tr>
+                        <td>@item.WorkExperience_CompanyName</td>
+                        <td>@item.WorkExperience_Designation</td>
+                        <td>@item.WorkExperience_FromDate</td>
+                        <td>@item.WorkExperience_ToDate</td>
+                        <td>@item.WorkExperience_Address</td>
+                    </tr>
+                                            }
+                        }
+                    </tbody>
+                </table>
+
+            </div><!-- /.table-responsive -->
+                </div>
+        </div>
+    </div>
+    </div><!-- /.box-body -->
+      <!-- /.box-footer -->
+   
+

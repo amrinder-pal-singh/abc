@@ -1,0 +1,102 @@
+﻿@model abc.Models.FinalSelection
+@{
+    ViewBag.Title = "ShowAllSelectedCandidates";
+    Layout = "~/Views/Shared/_LayoutPageAdmin.cshtml";
+}
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="row-same-height">
+            <div class="col-lg-12">
+
+                <!-- TABLE: LATEST ORDERS -->
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">View Finally Selected Candidates</h3>
+                        <div class="box-tools pull-right">
+                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
+
+
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            <table id="example1" class="table table-bordered table-striped">
+
+                                <thead>
+
+                                    <tr>
+                                        <th>User Name</th>
+                                        <th>Applied For</th>
+                                        <th>Joining Date</th>
+                                        <th>Probation Period</th>
+                                        <th>Salary Offered</th>
+
+
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in ViewBag.GetFinallySelectedCandidates)
+                                    {
+
+
+
+                                        <tr>
+                                            <td> @item.JobApplied.UserRegistration.UserRegistration_UserName</td>
+                                            <td>@item.JobApplied.JobOpening.Designation.Designation_Name</td>
+                                            <td>@item.FinalSelection_JoiningDate</td>
+                                            <td>@item.FinalSelection_ProbationPeriod</td>
+                                            <td>@item.FinalSelection_SalaryOffered</td>
+                                           
+
+
+                                        </tr>
+
+
+
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>User Name</th>
+                                        <th>Applied For</th>
+                                        <th>Joining Date</th>
+                                        <th>Probation Period</th>
+                                        <th>Salary Offered</th>
+
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            $("#example1").dataTable();
+            $('#example2').dataTable({
+                "bPaginate": true,
+                "bLengthChange": false,
+                "bFilter": false,
+                "bSort": true,
+                "bInfo": true,
+                "bAutoWidth": false
+            });
+        });
+
+    </script>
+}
+
+
+
+

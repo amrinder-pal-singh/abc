@@ -1,0 +1,100 @@
+﻿@model abc.Models.JobOpening
+
+@{
+    ViewBag.Title = "ShowCurrentJobOpenings";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (ViewBag.GetCurrentJobOpeningData == null)
+{
+    <h1>There Are No Jobs Available Yet</h1>
+}
+else
+{
+
+
+    foreach (var item in ViewBag.GetCurrentJobOpeningData )
+    {
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2 class="panel-title">@item.JobOpenings_Title</h2>
+            </div>
+            <div class="panel-body">
+
+                <div class="table-responsive">
+                    <table class="table no-margin">
+                        <thead>
+                            <tr>
+                                <th>Designation </th>
+                                <th> Required Qualification </th>
+                                <th>Key Skills Required</th>
+                                <th>Job Type</th>
+                                <th>Work Experience</th>
+                                <th>Location</th>
+                                <th>Apply Job</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td> @item.Designation.Designation_Name</td>
+                                <td>@item.Designation.Designation_Qualification</td>
+                                <td>@item.Designation.Designation_KeySkillDescription</td>
+                                <td>@item.JobOpenings_JobType</td>
+                                <td>@item.JobOpenings_WorkExperience</td>
+                                <td>@item.JobOpenings_Location</td>
+                                <td>
+
+
+                                    @{
+                                        using (Html.BeginForm("ApplyJobs", "RecruitmentZone", FormMethod.Post))
+                                        {
+      
+                                             <input type="hidden" id="JobOpenings_Id" name="JobOpenings_Id" value="@item.JobOpenings_Id" />
+
+
+                                            
+                                                <input type="submit" class="btn btn-success btn-sm" value="Apply" />
+                                          
+                                            
+                                            
+
+                                            
+                                                
+                                                
+                                        
+                                        
+                                        
+                                            
+                                               
+                                            
+                                        
+                                            
+                                                
+                                            
+                                             
+                                           
+                                       
+                                    
+                                    
+                                    }
+                                                                                
+                                   }
+                                    
+                            </td>
+
+
+                            </tr>
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+
+    }
+
+}

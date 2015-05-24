@@ -1,0 +1,137 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutPageAdmin.cshtml";
+}
+
+@model abc.Models.City
+<div id="page-wrapper">
+    <div class="container-fluid">
+        <div class="col-md-12">
+            <!-- TABLE: LATEST ORDERS -->
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Education Type</h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                   <div class="table-responsive">
+                       <table class="table no-margin">
+                           @if (ViewBag.Getcities == null)
+                           {
+                               <text>No City Records Found</text>
+                           }
+                           else
+                           {
+
+                               <thead>
+                                   <tr>
+                                       <th>S.No</th>
+                                       <th>City Name</th>
+
+                                       <th>State</th>
+                                       <th>Status</th>
+                                       <th>Edit</th>
+                                       <th>Change Status</th>
+                                   </tr>
+                               </thead>
+
+
+                               foreach (var item in ViewBag.Getcities)
+                               {
+                                   <tbody>
+                                       <tr>
+                                           <td>@item.City_Id</td>
+                                           <td>@item.City_Name</td>
+
+                                           <td>@item.State.State_Name</td>
+                                           <td>@item.City_Status</td>
+                                           <td>
+                                               @{
+                                   using (@Html.BeginForm("EditCity", "Admin", FormMethod.Post))
+                                   {
+                                       <input type="hidden" name="City_Id" value="@item.City_Id" />
+                                                   <input type="submit" class="btn btn-default btn-sm" value="Edit" />
+                                   }
+                                               }
+                                           </td>
+                                           <td>
+                                               @{
+                                   using (@Html.BeginForm("CityChangeStatus", "Admin", FormMethod.Post))
+                                   {
+                                       <input type="hidden" name="City_Id" value="@item.City_Id" />
+                                                   <input type="submit" class="btn btn-default btn-sm" value="Toggle" />
+                                   }
+                                               }
+                                           </td>
+                                       </tr>
+                                   </tbody>
+                               }
+
+
+
+
+                           }
+                       </table>
+
+</div><!-- /.table-responsive -->
+                </div><!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <a href="#" class="btn btn-sm btn-info btn-flat btn-success pull-left" data-toggle="modal" data-target="#EducationType-modal">Add Qualification</a>
+                    <a href="#" class="btn btn-sm btn-success btn-flat pull-right">Cancel</a>
+                </div><!-- /.box-footer -->
+            </div><!-- /.box -->
+        </div>
+      
+
+    </div>
+
+</div>
+<div class="EducationType-information">
+    <div class="modal modal-success modal fade" tabindex="-1" id="EducationType-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="JobOpening-information">Education Type Information </h4>
+                </div>
+                @{
+                    using (@Html.BeginForm("SaveCity","Admin", FormMethod.Post, new { @class = "form-horizontal" }))
+                    {
+                        <div class="modal-body">
+
+                            <fieldset>
+                                <legend>City</legend>
+
+                            </fieldset>
+                            <br />
+
+                            <div class="form-group">
+                                <label for="EducationType_Name" class="col-sm-3 control-label">Basic Education</label>
+                                <div class="col-sm-9">
+                                    <input type="hidden" name="City_Id" id="City_Id" value="@Model.City_Id " />
+                                    @Html.DropDownListFor(d => d.City_StateId, (List<SelectListItem>)ViewBag.GetStateDropDown, new { @class = "form-control" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="EducationType_Name" class="col-sm-3 control-label">Basic Education</label>
+                                <div class="col-sm-9">
+                                    @Html.TextBoxFor(d => d.City_Name, new { @class = "form-control", @id = "City_Name" })
+                                   
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline btn-success pull-left " aria-hidden="true" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-outline">Save changes</button>
+                        </div>
+                    }}
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div>

@@ -1,0 +1,43 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutPageAdmin.cshtml";
+}
+
+@model abc.Models.State
+
+<div class="col-md-12">
+
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Update State</h3>
+            <div class="box-tools pull-right">
+                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+        @{
+            using (@Html.BeginForm("SaveState", "Admin", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+
+                <div class="box-body">
+
+
+
+                    @Html.HiddenFor(d => d.State_Id)
+                    <div class="form-group">
+                        <label for="Education-Category" class="col-sm-3 control-label">Education Category</label>
+                        <div class="col-sm-9">
+
+                            @Html.TextBoxFor(d => d.State_Name, new { @class = "form-control", @id = "State_Name" })
+
+                        </div>
+                    </div>
+                </div><!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <button type="submit" class="btn btn-sm btn-info btn-flat btn-success pull-left" >Update</button>
+                    <a href="#" class="btn btn-sm  btn-flat pull-right">Cancel</a>
+                </div><!-- /.box-footer -->
+            }
+
+        }
+    </div><!-- /.box -->
+</div>

@@ -1,0 +1,64 @@
+﻿@model abc.Models.Designation
+@{
+    ViewBag.Title = "EditDesignationInformation";
+    Layout = "~/Views/Shared/_LayoutPageAdmin.cshtml";
+}
+<div id="page-wrapper">
+    <div class="container-fluid">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="Designation-information">Designation Information</h4>
+                </div>
+
+                <div class="panel-body">
+                    @{
+                        using (@Html.BeginForm("SaveDesignationInformation", "Admin", FormMethod.Post, new { @class = "form-horizontal" }))
+                        {
+                            <fieldset>
+                                <legend>Designation Information</legend>
+
+                            </fieldset>
+                            <br />
+                            @Html.HiddenFor(d => d.Designation_Id)
+                            <div class="form-group">
+                                <label for="Designation_Name" class="col-sm-3 control-label">Designation Name</label>
+                                <div class="col-sm-9">
+                                    @Html.TextBoxFor(d => d.Designation_Name, new { @class = "form-control", @id = "Designation_Name" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="Designation_Qualification" class="col-sm-3 control-label">Designation Qualification</label>
+                                <div class="col-sm-9">
+                                    @Html.TextBoxFor(d => d.Designation_Qualification, new { @class = "form-control", @id = "Designation_Qualification" })
+                                </div>
+                            </div>
+                           
+
+
+
+                            <div class="form-group">
+                                <label for="Designation_KeySkillDescription" class="col-sm-3 control-label">Required key Skills</label>
+                                <div class="col-sm-9">
+                                @Html.TextAreaFor(d => d.Designation_KeySkillDescription, new { @class = "form-control", @id = "Designation_KeySkillDescription" })
+                                </div>
+                            </div>
+                            <br />
+                            <div class="form-group">
+                                <div class="col-sm-3">
+                                    <button type="submit" class="btn btn-lg btn-primary">Save changes</button>
+                                </div>
+
+                                <div class="col-sm-3">
+                                    <button type="button" class="btn btn-lg btn-default" onclick="location.href='@Url.Action("ShowDesignationInformation", "Admin")'">Cancel</button>
+                                </div>
+                            </div>
+                        }
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

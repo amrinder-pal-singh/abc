@@ -1,0 +1,152 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutPageAdmin.cshtml";
+}
+
+@model abc.Models.City
+
+<div id="page-wrapper">
+    <div class="container-fluid">
+
+
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">Cities</h2>
+                </div>
+                <div class="panel-body">
+
+                    @{
+                        using (@Html.BeginForm("SaveCity", "Admin", FormMethod.Post))
+                        {
+                            <input type="hidden" name="City_Id" value="@Model.City_Id" id="City_Id"/>
+                        
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <label>
+                                        Country
+                                    </label>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    @*@Html.DropDownListFor(d => d.State.State_CountryId, (List<SelectListItem>)ViewBag.GetCountries, new { @class = "form-control",@id="CountryDropdownList"})*@
+                                </div>
+                            </div>
+
+                            <br />
+                        
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <label>
+                                        State
+                                    </label>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    @Html.DropDownListFor(d => d.City_StateId, (List<SelectListItem>)ViewBag.GetStates, new { @class = "form-control" })
+                                </div>
+                            </div>
+
+                            <br />
+                        
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <label>
+                                        Name
+                                    </label>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" placeholder="Enter Name" name="City_Name" value="@Model.City_Name" />
+                                </div>
+                            </div>
+
+                            <br />
+
+                            <div class="row">
+                                <div class="col-lg-2">
+
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="col-lg-3">
+                                        <button type="submit" class="btn btn-lg btn-primary">
+                                            Save
+                                        </button>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <button type="button" class="btn btn-lg btn-default" onclick="location.href='@Url.Action("Cities", "Admin")'">
+                                            Cancel
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <br />
+                        }
+                    }
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+@*<script src="~/Scripts/jquery-2.1.3.min.js"></script>
+
+
+
+<script src="~/Scripts/jquery-ui-1.11.4.min.js"></script>
+<script type="text/javascript">
+    
+    $(document).ready(function ()
+    {
+        var Id = $("#HiddenCityId").val();
+        if ($("#CountryDropdownList").val() !=0)
+        {
+            var cID = $("#CountryDropdownList").val();            
+            $.getJSON("/Admin/LoadStatesByCountry", { CountryId: cID},
+                   function (data) {
+                       var select = $("#StateDropdownList");
+                       select.empty();
+                       select.append($('<option/>', {
+                           value: 0,
+                           text: "-Please Select-"
+                       }));
+                       $.each(data, function (index, itemData) {
+                           select.append($('<option/>', {
+                               value: itemData.Value,
+                               text: itemData.Text
+                              
+                           }));
+                       });
+                   });
+            $("#StateDropdownList").val($("#HiddenCityId").val());
+        }
+        $("#CountryDropdownList").on('change', function ()
+        {
+            var cID = $(this).val();
+            
+            $.getJSON("/Admin/LoadStatesByCountry", { CountryId: cID },
+                   function (data) {
+                       var select = $("#StateDropdownList");
+                       select.empty();
+                       select.append($('<option/>', {
+                           value: 0,
+                           text: "-Please Select-"
+                       }));
+                       $.each(data, function (index, itemData) {
+                           select.append($('<option/>', {
+                               value: itemData.Value,
+                               text: itemData.Text
+                           }));
+                       });
+                   });            
+        });
+        
+    });
+</script>*@

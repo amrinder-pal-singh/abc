@@ -1,0 +1,63 @@
+﻿@model abc.Models.JobApplied
+@{
+    ViewBag.Title = "MyAcceptedApplications";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="col-md-12">
+   
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">My Accepted Job Applications</h3>
+            <div class="box-tools pull-right">
+                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="table-responsive">
+                <table class="table no-margin">
+                    <thead>
+                        <tr>
+                            <th>Designation Name</th>
+                            <th>Applied Date</th>
+                            <th>Required Qualification</th>
+                            <th>JobType</th>
+                            <th>Job Location</th>
+                            <th>InterviewDate</th>
+                            <th>InterviewVenue</th>
+                        </tr>
+                    </thead>
+                    @{
+                        foreach (var item in ViewBag.GetMyAcceptedJobApplications)
+                        {
+                            <tbody>
+                                <tr>
+                                    <td>@item.JobOpening.Designation.Designation_Name</td>
+                                    <td>@item.JobApplied_ApplyDate</td>
+                                    <td>@item.JobOpening.Designation.Designation_Qualification</td>
+                                    <td>@item.JobOpening.JobOpenings_JobType</td>
+                                    <td>@item.JobOpening.JobOpenings_Location</td>
+                                    <td>@item.JobOpening.JobOpenings_InterviewDate</td>
+                                    <td>@item.JobOpening.JobOpening_InterviewVenue</td>
+                                  
+
+
+                                </tr>
+
+
+                            </tbody>
+                        }
+
+
+                    }
+
+                </table>
+            </div>
+        </div>
+        <div class="box-footer clearfix">
+       
+        </div>
+    </div>
+</div>

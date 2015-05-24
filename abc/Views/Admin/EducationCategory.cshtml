@@ -1,0 +1,120 @@
+﻿@model abc.Models.EducationCategory
+@{
+    ViewBag.Title = "EducationCategory";
+    Layout = "~/Views/Shared/_LayoutPageAdmin.cshtml";
+}
+
+<div class="col-md-12">
+    
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Education Category</h3>
+            <div class="box-tools pull-right">
+                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+
+        <div class="box-body">
+            <div class="table-responsive">
+                <table class="table no-margin">
+                    <thead>
+                        <tr>
+                            <th>Education Category</th>
+                            <th>Status</th>
+                       </tr>
+                    </thead>
+                    <tbody>
+                       @if(ViewBag.GetEducationCategoryData==null)
+                       {
+                           <tr>
+                               <td>Please Enter Some Education Categories</td>
+                           </tr>
+                       }
+                       else
+                       {
+                           foreach (var item in ViewBag.GetEducationCategoryData)
+                       {
+                        <tr>
+                            <td>@item.Education_CategoryName</td>
+                            <td>@item.Education_CategoryStatus</td>
+                            <td>
+                                @{
+                           using (@Html.BeginForm("EditEducationCategory", "Admin", FormMethod.Post))
+                           {
+                               <input type="hidden" name="Education_CategoryId" id="Education_CategoryId" value="@item.Education_CategoryId " />
+                                    <input type="submit" class="btn btn-default btn-sm" name="" value="Edit " />
+
+                           }
+                                }
+                            </td>
+                            
+                              <td>
+                                @{
+                           using (@Html.BeginForm("ChangeEducationCategoryStatus", "Admin", FormMethod.Post, new { @class = "form-horizontal" }))
+                           {
+                               <input type="hidden" name="Education_CategoryId" id="Education_CategoryId" value="@item.Education_CategoryId " />
+                                     <input type="submit" class="btn btn-default btn-sm"  name="" value="Toggle " />
+
+                           }
+}
+                            </td>
+
+                        </tr>
+                       }
+                       }
+                    </tbody>
+                </table>
+            </div><!-- /.table-responsive -->
+        </div><!-- /.box-body -->
+        <div class="box-footer clearfix">
+            <a href="#" class="btn btn-sm btn-info btn-flat btn-success pull-left" data-toggle="modal" data-target="#EducationCategory-modal">Add Education Category</a>
+            <a href="#" class="btn btn-sm  btn-flat pull-right">Cancel</a>
+        </div><!-- /.box-footer -->
+    </div><!-- /.box -->
+</div>
+
+
+
+<!---Modal--->
+
+<div class="Education-Category">
+    <div class="modal modal-success modal fade" tabindex="-1" id="EducationCategory-modal">
+        <div class="modal-dialog">      
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            <h4 class="Education-Category">Add Education Category</h4>
+        </div>
+      
+@{
+    using( @Html.BeginForm("SaveEducationCategory", "Admin", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+          
+                <div class="modal-body">
+            <div class="form-group">
+                <label for="Education-Category" class="col-sm-3 control-label">Education Category</label>
+                <div class="col-sm-9">
+                                      
+                    @Html.TextBoxFor(d => d.Education_CategoryName, new { @class = "form-control", @id = "Education_CategoryName"})
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline btn-success pull-left " aria-hidden="true" data-dismiss="modal">Close</button>
+            @Html.HiddenFor(d=>d.Education_CategoryId)
+            <button type="submit" class="btn btn-outline">Save changes</button>
+        </div>
+         }
+
+         }    
+    </div>
+ 
+               
+                
+         <!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div>
+

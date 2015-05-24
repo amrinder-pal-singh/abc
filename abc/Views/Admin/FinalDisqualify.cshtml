@@ -1,0 +1,51 @@
+﻿@model abc.Models.FinalDisqualification
+@{
+    ViewBag.Title = "FinalDisqualify";
+    Layout = "~/Views/Shared/_LayoutPageAdmin.cshtml";
+}
+
+
+<div class="col-md-12">
+
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Update Interview Round</h3>
+            <div class="box-tools pull-right">
+                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+                @{
+            using (@Html.BeginForm("SaveFinalDisqualification", "Admin", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+
+                <div class="box-body">
+
+
+                @Html.HiddenFor(d=>d.FinalDisqualification_JobAppliedId)
+                   
+                    <div class="form-group">
+                        <label for="InterviewRoundName" class="col-sm-3 control-label">Remarks</label>
+                        <div class="col-sm-9">
+
+                            @Html.TextBoxFor(d => d.FinalDisqualification_Remarks, new { @class = "form-control", @id = "Round_Name" })
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="RejectinRound" class="col-sm-3 control-label">Reject in Round</label>
+                        <div class="col-sm-9">
+                            @Html.DropDownListFor(d => d.FinalDisqualification_RoundId, (List<SelectListItem>)ViewBag.InterviewRounDropDownData, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                </div><!-- /.box-body -->
+                        <div class="box-footer clearfix">
+                            <button type="submit" class="btn btn-sm btn-info btn-flat btn-success pull-left">Update</button>
+                            <a href="#" class="btn btn-sm  btn-flat pull-right">Cancel</a>
+                        </div><!-- /.box-footer -->
+                        }
+
+                        }
+                    </div><!-- /.box -->
+                </div>

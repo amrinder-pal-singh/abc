@@ -1,0 +1,55 @@
+﻿@model abc.Models.EducationType
+@{
+    ViewBag.Title = "EditEducationType";
+    Layout = "~/Views/Shared/_LayoutPageAdmin.cshtml";
+}
+
+<div class="col-md-12">
+
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Update Education Category</h3>
+            <div class="box-tools pull-right">
+                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+        @{
+            using (@Html.BeginForm("SaveEducationType","Admin",FormMethod.Post,new { @class = "form-horizontal" }))
+            {
+
+                <div class="box-body">
+
+
+
+                    
+    
+                    <div class="form-group">
+                        <label for="Education-Category" class="col-sm-3 control-label">Education Category</label>
+                        <div class="col-sm-9">
+
+                            <input type="hidden" name="EducationType_Id" id="EducationType_Id" value="@Model.EducationType_Id" />
+                            @Html.DropDownListFor(d => d.EducationType_EducationCategoryId, (List<SelectListItem>)ViewBag.GetEducationCategoryDropDownData, new { @class = "form-control" })
+
+                        </div>
+                    </div>
+                        <div class="form-group">
+                        <label for="Education-Type" class="col-sm-3 control-label">Education Type</label>
+                        <div class="col-sm-9">
+
+                            @Html.TextBoxFor(d => d.EducationType_Name, new { @class = "form-control", @id = "EducationType_Name" })
+
+                        </div>
+                    </div>
+                </div><!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <input type="hidden" name="EducationType_Id" id="EducationType_Id" value="@Model.EducationType_Id" />
+                    <button type="submit" class="btn btn-sm btn-info btn-flat btn-success pull-left" data-toggle="modal" data-target="#EducationCategory-modal">Update</button>
+                    <a href="#" class="btn btn-sm  btn-flat pull-right">Cancel</a>
+                </div><!-- /.box-footer -->
+            }
+
+        }
+    </div><!-- /.box -->
+</div>
+

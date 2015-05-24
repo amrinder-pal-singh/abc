@@ -1,0 +1,56 @@
+﻿@model abc.Models.JobApplied
+@{
+    ViewBag.Title = "AppliedJobs";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+    
+ @{
+
+
+    <input type="hidden" name="JobApplied_RegisterationId" @*value="@Model.JobApplied_RegisterationId "*@ id="JobApplied_RegisterationId" />
+    foreach (var item in ViewBag.GetUserJobAppliedData)
+    {
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2 class="panel-title">@item.JobOpening.JobOpenings_Title</h2>
+            </div>
+            <div class="panel-body">
+
+                <div class="table-responsive">
+                    <table class="table no-margin">
+                        <thead>
+                            <tr>
+                                <th>Designation </th>
+                                
+                               
+                                <th>Job Type</th>
+                                <th>Work Experience</th>
+                                <th>Location</th>
+                                <th>Apply Date</th>
+                                <th>Process Status</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <th> @item.JobOpening.Designation.Designation_Name</th>
+                                
+                                <th>@item.JobOpening.JobOpenings_JobType</th>
+                                <th>@item.JobOpening.JobOpenings_WorkExperience</th>
+                                <th>@item.JobOpening.JobOpenings_Location</th>
+                                <th>@item.JobApplied_ApplyDate.ToShortDateString()</th>
+                                <th>@item.JobApplied_Status </th>
+                            </tr>
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+
+    }
+
+}

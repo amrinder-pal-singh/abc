@@ -1,0 +1,156 @@
+﻿@model abc.Models.PersonalInformation
+@{
+    ViewBag.Title = "EditPersonalInformation";
+   Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .datepicker {
+        z-index: 10000 !important;
+    }
+</style>
+
+<div class="col-md-12">
+
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Update Personal Information</h3>
+            <div class="box-tools pull-right">
+                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+
+        @{
+            using (@Html.BeginForm("SavePersonalInformation","RecruitmentZone", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                <div class="box-body">
+
+
+                    <fieldset>
+
+                        <legend>Personal Information</legend>
+
+                    </fieldset>
+                    <div class="form-group">
+                        <label for="firstName" class="col-sm-3 control-label">First Name</label>
+                        <div class="col-sm-9">
+                            @Html.TextBoxFor(d => d.PersonalInformation_FirstName, new { @id="Full Name",@class="form-control",@placeholder="First Name"})
+                            @*<input type="text" name="PersonalInformation_FirstName" value="@Model.PersonalInformation_FirstName " id="fullName" class="form-control" />*@
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="LastName" class="col-sm-3 control-label">Last Name</label>
+                        <div class="col-sm-9">
+                            @Html.TextBoxFor(d => d.PersonalInformation_LastName, new { @id="Last Name",@class="Form-control",@placeholder="Last Name"})
+                            @*<input type="text" name="PersonalInformation_LastName" value="@Model.PersonalInformation_LastName" id="lastName" class="form-control" />*@
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="date-picker-2" class="control-label col-sm-3">Date Of Birth</label>
+                        <div id="DateTimePicker1" class="input-append date col-sm-9">
+                            <div class="input-group">
+                                <input type="hidden" name="PersonalInformation_DateOfBirth" value="@Model.PersonalInformation_DateOfBirth" id="HiddenDOB" />
+                         
+                                       <input type="text" style="color:black" id="TextDOB" data-format="DD-MM-YYYY" disabled="disabled" class="form-control" />
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+
+                        <label for="gender" class="col-sm-3 control-label">Gender</label>
+
+                        <div class="col-sm-9">
+                            <div class="radio">
+                                <label>
+                                    @Html.RadioButtonFor(d => d.PersonalInformation_Gender, true)
+                                    @*<input type="radio" name="Gender" value="F" />*@
+                                    Male
+                                </label><br />
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    @Html.RadioButtonFor(d => d.PersonalInformation_Gender, false)
+                                    @*<input type="radio" name="Gender" value="F" />*@
+                                    Female
+                                </label><br />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="maritialstatus" class="col-sm-3 control-label">Maritial Status</label>
+                        <div class="col-sm-9">
+                            <div class="radio">
+
+                                @Html.RadioButtonFor(d => d.PersonalInformation_MaritialStatus,"Married")
+                                Married
+                                <br />
+                            </div>
+                            <div class="radio">
+
+                                @Html.RadioButtonFor(d => d.PersonalInformation_MaritialStatus, "UnMarried")
+
+                                Unmarried
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+                </div><!-- /.box-body -->
+                <div class="box-footer clearfix">
+       @Html.HiddenFor(d=>d.PersonalInformation_Id)
+                    <button type="submit" class="btn btn-success "  onclick="SaveDetails(this)">Save changes</button>
+                    
+                    <a href="#" class="btn btn-sm  btn-flat pull-right">Cancel</a>
+
+                </div><!-- /.box-footer -->
+            }
+
+        }
+    </div><!-- /.box -->
+</div>
+@section scripts
+{
+    <script>
+
+
+        function SaveDetails(e) {
+            var TextDOB = $("#TextDOB").val();
+            $("#HiddenDOB").val(TextDOB);
+            e.parentElement.parentElement.submit();
+        }
+
+        $(document).ready(function () {
+            var HiddenDOB = $("#HiddenDOB").val();
+            $("#TextDOB").val(HiddenDOB);
+        });
+
+
+        $('#DateTimePicker1').datepicker(
+            {
+                dateFormat: 'dd-mm-yy',
+                minDate: '+5d',
+                changeMonth: true,
+                changeYear: true,
+
+            }).on('changeDate', function (e) {
+                $(this).datepicker('hide');
+
+            });
+
+    </script>
+
+
+
+}

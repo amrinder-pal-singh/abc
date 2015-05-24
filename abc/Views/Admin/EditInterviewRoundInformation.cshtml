@@ -1,0 +1,43 @@
+﻿@model abc.Models.InterViewRound
+@{
+    ViewBag.Title = "EditInterviewRoundInformation";
+    Layout = "~/Views/Shared/_LayoutPageAdmin.cshtml";
+}
+
+<div class="col-md-12">
+
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Update Interview Round</h3>
+            <div class="box-tools pull-right">
+                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+        @{
+            using (@Html.BeginForm("SaveInterviewRoundInformation", "Admin", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+
+                <div class="box-body">
+
+
+
+                    @Html.HiddenFor(d => d.InterviewRounds_Id)
+                    <div class="form-group">
+                        <label for="InterviewRoundName" class="col-sm-3 control-label">Interview Round Name</label>
+                        <div class="col-sm-9">
+
+                            @Html.TextBoxFor(d => d.Round_Name, new { @class = "form-control", @id = "Round_Name" })
+
+                        </div>
+                    </div>
+                </div><!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <button type="submit" class="btn btn-sm btn-info btn-flat btn-success pull-left" >Update</button>
+                    <a href="#" class="btn btn-sm  btn-flat pull-right">Cancel</a>
+                </div><!-- /.box-footer -->
+            }
+
+        }
+    </div><!-- /.box -->
+</div>

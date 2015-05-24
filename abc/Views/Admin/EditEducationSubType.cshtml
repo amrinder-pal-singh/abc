@@ -1,0 +1,111 @@
+﻿
+@model abc.Models.EducationSubType
+@{
+    ViewBag.Title = "EditEducationSubType";
+    Layout = "~/Views/Shared/_LayoutPageAdmin.cshtml";
+}
+
+<div class="col-md-12">
+
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Update Education Streams</h3>
+            <div class="box-tools pull-right">
+                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+        @{
+            using (@Html.BeginForm("SaveEducationSubType","Admin", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+
+                <div class="box-body">
+
+
+
+
+
+                    <div class="form-group">
+                        <label for="Education-Category" class="col-sm-3 control-label">Education Category</label>
+                        <div class="col-sm-9">
+
+                            @*<input type="hidden" name="EducationSubType_Name" id="EducationSubType_Name" value="@Model.EducationSubType_Id" />*@
+                            @Html.DropDownListFor(d => d.EducationSubType_EducationCategoryId, (List<SelectListItem>)ViewBag.GetEducationCategoryDropDownData, new { @class ="form-control", @id ="GetEducationCategoryDropDownData" })
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Education-Category" class="col-sm-3 control-label">Education Category</label>
+                        <div class="col-sm-9">
+
+                            @*<input type="hidden" name="EducationSubType_Name" id="EducationSubType_Name" value="@Model.EducationSubType_Id" />*@
+                            @Html.DropDownListFor(d => d.EducationSubType_EducationTypeId, new SelectList(Enumerable.Empty<SelectListItem>(), "EducationSubType_EducationTypeId", "EducationType.EducationType_Name"),@Model.EducationType.EducationType_Name, new { @class = "form-control", @id = "GetEducationTypeDropDownData" })
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Education-Type" class="col-sm-3 control-label">Education Type</label>
+                        <div class="col-sm-9">
+                            @Html.TextBoxFor(d =>d.EducationSubType_Name, new { @class = "form-control", @id ="EducationSubType_Name" })
+                        
+
+                        </div>
+                    </div>
+                </div><!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <input type="hidden" name="EducationSubType_Id" id="EducationSubType_Id" value="@Model.EducationSubType_Id" />
+                    <button type="submit" class="btn btn-sm btn-info btn-flat btn-success pull-left" data-toggle="modal" data-target="#EducationCategory-modal">Update</button>
+                    <a href="#" class="btn btn-sm  btn-flat pull-right">Cancel</a>
+        
+                </div><!-- /.box-footer -->
+            }
+
+        }
+    </div><!-- /.box -->
+</div>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            var Id = $("#EducationSubType_Id").val();
+            if ($("#GetEducationCategoryDropDownData").val() != 0)
+            {
+                var EcID = $("#GetEducationCategoryDropDownData").val();
+                $.getJSON("/Admin/LoadEducationTypeByEducationCategory", { EducationCategoryId: EcID },
+                       function (data) {
+                           var select = $("#GetEducationTypeDropDownData");
+                           
+                             $.each(data, function (index, EducationTypeData) {
+                               select.append($('<option/>', {
+                                   value: EducationTypeData.Value,
+                                   text: EducationTypeData.Text
+
+                               }));
+                           });
+                       });
+                $("#GetEducationTypeDropDownData").val($("EducationSubType_Id").val());
+            }
+            $("#GetEducationCategoryDropDownData").on('change', function () {
+                var EcID = $(this).val();
+
+                $.getJSON("/Admin/LoadEducationTypeByEducationCategory", { EducationCategoryId: EcID },
+                       function (data) {
+                           var select = $("#GetEducationTypeDropDownData");
+                           select.empty();
+                           select.append($('<option/>', {
+                               value: 0,
+                               text: "-Please Select-"
+                           }));
+                           $.each(data, function (index, EducationTypeData) {
+                               select.append($('<option/>', {
+                                   value: EducationTypeData.Value,
+                                   text: EducationTypeData.Text
+                               }));
+                           });
+                       });
+            });
+
+        });
+        </script>
+}

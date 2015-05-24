@@ -1,0 +1,322 @@
+﻿@model abc.Models.JobOpening
+@{
+    ViewBag.Title = "JobOpenings";
+    Layout = "~/Views/Shared/_LayoutPageAdmin.cshtml";
+}
+<style>
+    .datepicker {
+        z-index: 10000 !important;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="row-same-height">
+            <div class="col-lg-12">
+                <!-- TABLE: LATEST ORDERS -->
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Job Opening</h3>
+                        <div class="box-tools pull-right">
+                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            <table id="example1" class="table no-margin">
+                                <thead>
+                                    <tr>
+                                        <th>Designation Name</th>
+                                        <th>Job Type</th>
+                                        <th>No. of vaccancies</th>
+                                        <th>Location</th>
+                                        <th>Work Experience</th>
+                                        <th>Job Opening Title</th>
+                                        <th>Job Post Date</th>
+                                        <th>Interview Date</th>
+                                        <th>Interview Venue</th>
+                                        <th>Status</th>
+                                        <th>Edit</th>
+                                        <th>Change Status</th>
+                                    </tr>
+
+                                </thead>
+                                <tbody>
+
+                                    @if (ViewBag.GetJobOpeningData == null)
+                        {
+                        <tr><td>Please Enter Some Information</td> </tr>
+                        }
+                        else
+                        {
+                            foreach (var item in ViewBag.GetJobOpeningData)
+                            {
+
+                        <tr>
+                            <td>@item.Designation.Designation_Name </td>
+                            <td>@item.JobOpenings_JobType</td>
+                            <td>@item.JobOpenings_Vaccancies</td>
+                            <td>@item.JobOpenings_Location  </td>
+                            <td>@item.JobOpenings_WorkExperience</td>
+                            <td> @item.JobOpenings_Title</td>
+                            <td>@item.JobOpenings_PostDateTime.ToShortDateString()</td>
+                            <td>@item.JobOpenings_InterviewDate.ToShortDateString()</td>
+                            <td>@item.JobOpening_InterviewVenue</td>
+                            <td>@item.JobOpenings_Status </td>
+
+                            <td>
+                                @{
+                                using (Html.BeginForm("EditJobOpeningInformation", "Admin", FormMethod.Post))
+                                {
+                                        <input type="hidden" id="JobOpenings_Id" name="JobOpenings_Id" value="@item.JobOpenings_Id" />
+                                        <input type="submit" class="btn btn-default btn-sm" value="Edit" />
+                                }
+                                }
+                            </td>
+                            <td>
+                                @{
+                                using (@Html.BeginForm("ChangeJobOpeningsStatus", "Admin", FormMethod.Post))
+                                {
+                                        <input type="hidden" name="JobOpenings_Id" value="@item.JobOpenings_Id" />
+                                        <input type="submit" class="btn btn-default btn-sm" value="Toggle" />
+                                }
+                                }
+
+                            </td>
+
+
+                        </tr>
+                            }
+                        }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Designation Name</th>
+                                        <th>Job Type</th>
+                                        <th>No. of vaccancies</th>
+                                        <th>Location</th>
+                                        <th>Work Experience</th>
+                                        <th>Job Opening Title</th>
+                                        <th>Job Post Date</th>
+                                        <th>Interview Date</th>
+                                        <th>Interview Venue</th>
+                                        <th>Status</th>
+                                        <th>Edit</th>
+                                        <th>Change Status</th>
+                                    </tr>
+
+                                </tfoot>
+                            </table>
+                        </div><!-- /.table-responsive -->
+                    </div><!-- /.box-body -->
+                    <div class="box-footer clearfix">
+                        <a href="#" class="btn btn-sm btn-info btn-flat btn-success pull-left" data-toggle="modal" data-target="#JobOpening-modal">Add Job Openings</a>
+                        <a href="#" class="btn btn-sm btn-default btn-flat pull-right">Cancel</a>
+                    </div><!-- /.box-footer -->
+                </div><!-- /.box -->
+            </div>
+
+            </div>
+        </div>
+    </div>
+
+            <!---Modal--->
+            <div class="JobOpening-information">
+                <div class="modal modal-success modal fade" tabindex="-1" id="JobOpening-modal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                <h4 class="JobOpening-information">Job Opening Information </h4>
+                            </div>
+
+
+
+
+                            @{
+                    using (@Html.BeginForm("SaveJobOpeningInformation", "Admin", FormMethod.Post, new { @class = "form-horizontal" }))
+                               {
+
+            <div class="modal-body">
+
+
+                <fieldset>
+                    <legend>Add Job Opening</legend>
+
+                </fieldset>
+                <br />
+                <div class="form-group">
+                    <label for="JobOpenings_Title" class="col-sm-3 control-label">Job Title</label>
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(d => d.JobOpenings_Title, new { @class = "form-control", @id = "JobOpenings_Title" })
+                        @*<input type="text" name="JobOpening_Description" value=" " id="JobOpening_Description" class="form-control" />*@
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="JobOpenings_DesignationId" class="col-sm-3 control-label">Select Designation</label>
+                    <div class="col-sm-9">
+                        @Html.DropDownListFor(d => d.JobOpenings_DesignationId, (List<SelectListItem>)ViewBag.GetJobOpeningDesignationDropdownData, new { @class = "form-control" })
+                        <br />
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="JobOpening_JobType" class="col-sm-3 control-label">Job Type</label>
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(d=>d.JobOpenings_JobType,new{@class="form-control",@id="JobOpenings_JobType"})
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="JobOpenings_Vaccancies" class="col-sm-3 control-label">No. Of Vaccancies</label>
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(d => d.JobOpenings_Vaccancies, new { @class = "form-control", @id = "JobOpenings_Vaccancies" })
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="JobOpening_Location" class="col-sm-3 control-label">Job Location</label>
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(d => d.JobOpenings_Location, new { @class = "form-control", @id = "JobOpenings_Location" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="JobOpening_WorkExperience" class="col-sm-3 control-label">Work Experience</label>
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(d => d.JobOpenings_WorkExperience, new { @class = "form-control", id = "JobOpenings_WorkExperience" })
+                        @*<input type="text" name="JobOpening_WorkExperience" value=" " id="JobOpening_WorkExperience" class="form-control" />*@
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="date-picker1" class="control-label col-sm-3">Job Post Date</label>
+                    <div id="DateTimePicker1" class="input-append date col-sm-9">
+                        <div class="input-group">
+                            <input type="hidden" name="JobOpenings_PostDateTime" value="@Model.JobOpenings_PostDateTime.ToShortDateString()" id="HiddenJobPostDate" />
+                            <input type="text" style="color:black" id="TextJobPostDate" data-format="DD-MM-YYYY" disabled="disabled" class="form-control" />
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="JobOpening_InterviewVenue" class="col-sm-3 control-label">Interview Venue</label>
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(d => d.JobOpening_InterviewVenue, new { @class = "form-control", @id = "JobOpening_InterviewVenue" })
+                        @*<input type="text" name="JobOpening_Description" value=" " id="JobOpening_Description" class="form-control" />*@
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="date-picker-2" class="control-label col-sm-3">Interview Date</label>
+                    <div id="DateTimePicker2" class="input-append date col-sm-9">
+                        <div class="input-group">
+                            <input type="hidden" name="JobOpenings_InterviewDate" value="@Model.JobOpenings_InterviewDate.ToShortDateString()" id="HID" />
+                            <input type="text" style="color:black" id="TextJID" data-format="DD-MM-YYYY" disabled="disabled" class="form-control" />
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline pull-left " aria-hidden="true" data-dismiss="modal">Close</button>
+                <button type="submit" onclick="SaveDetails(this)" class="btn btn-outline">Save changes</button>
+            </div>
+}
+                            }
+
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+            </div>
+
+
+
+
+            @section scripts
+{
+                <script>
+
+
+        function SaveDetails(e) {
+            var TextJobPostDate = $("#TextJobPostDate").val();
+            var TextJobOpeningsInterviewDate = $("#TextJID").val();
+            $("#HiddenJobPostDate").val(TextJobPostDate);
+
+            $("#HID").val(TextJobOpeningsInterviewDate);
+            e.parentElement.parentElement.submit();
+        }
+
+        $(document).ready(function () {
+            var HiddenJobPostDate = $("#HiddenJobPostDate").val();
+
+            var HiddenJobOpeningsInterviewDate = $("#HID").val();
+            $("#TextJobPostDate").val(HiddenJobPostDate);
+            $("#TextJID").val(HiddenJobOpeningsInterviewDate);
+
+
+        });
+
+
+        $('#DateTimePicker1').datepicker(
+            {
+
+                todayBtn: "linked",
+                clearBtn: true,
+                dateFormat: 'dd-mm-yy',
+                minDate: '+5d',
+                changeMonth: true,
+                changeYear: true,
+                inline: true,
+                sideBySide: true
+
+            }).on('changeDate', function (e) {
+                $(this).datepicker('hide');
+
+            }
+
+
+                );
+        $('#DateTimePicker2').datepicker(
+                  {
+
+                      todayBtn: "linked",
+                      clearBtn: true,
+                      dateFormat: 'dd-mm-yy',
+                      minDate: '+5d',
+                      changeMonth: true,
+                      changeYear: true,
+                      inline: true,
+                      sideBySide: true
+
+                  }).on('changeDate', function (e) {
+                      $(this).datepicker('hide');
+
+                  }
+
+
+                      );
+
+                </script>
+                <script type="text/javascript">
+                    $(function () {
+                        $("#example1").dataTable();
+                        $('#example2').dataTable({
+                            "bPaginate": true,
+                            "bLengthChange": false,
+                            "bFilter": false,
+                            "bSort": true,
+                            "bInfo": true,
+                            "bAutoWidth": false
+                        });
+                    });
+
+                </script>
+            }

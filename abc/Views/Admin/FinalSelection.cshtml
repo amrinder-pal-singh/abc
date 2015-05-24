@@ -1,0 +1,109 @@
+﻿@model abc.Models.FinalSelection
+@{
+    ViewBag.Title = "FinalSelection";
+    Layout = "~/Views/Shared/_LayoutPageAdmin.cshtml";
+}
+
+
+<div class="col-md-12">
+
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Final Selection</h3>
+            <div class="box-tools pull-right">
+                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+        @{
+            using (@Html.BeginForm("SaveFinalSelection", "Admin", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+
+          <div class="box-body">
+
+
+                @Html.HiddenFor(d=>d.FinalSelection_JobAppliedId)
+                   
+
+              <div class="form-group">
+                  <label for="RejectinRound" class="col-sm-3 control-label">Final Round</label>
+                  <div class="col-sm-9">
+                      @Html.DropDownListFor(d => d.FinalSelection_RoundId, (List<SelectListItem>)ViewBag.InterviewRounDropDownData, new { @class = "form-control" })
+                  </div>
+              </div>
+              <div class="form-group">
+                  <label for="JoiningDate" class="control-label col-sm-3">Joining Date</label>
+                  <div id="DateTimePicker1" class="input-append date col-sm-9">
+                      <div class="input-group">
+
+                          <input type="hidden" name="FinalSelection_JoiningDate" value="@Model.FinalSelection_JoiningDate" id="HiddenDOB" />
+                          <input type="text" style="color:black" id="TextDOB" data-format="DD-MM-YYYY" disabled="disabled" class="form-control" />
+                          <div class="input-group-addon">
+                              <i class="fa fa-calendar"></i>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="form-group">
+                  <label for="FinalSelectionSalaryOffered" class="col-sm-3 control-label">Salary Offered</label>
+                  <div class="col-sm-9">
+
+                      @Html.TextBoxFor(d => d.FinalSelection_SalaryOffered, new { @class = "form-control", @id = "FinalSelection_SalaryOffered" })
+
+                  </div>
+              </div>
+              <div class="form-group">
+                  <label for="FinalSelectionSalaryOffered" class="col-sm-3 control-label">Probation Period</label>
+                  <div class="col-sm-9">
+
+                      @Html.TextBoxFor(d => d.FinalSelection_ProbationPeriod, new { @class = "form-control", @id = "FinalSelection_ProbationPeriod" })
+
+                  </div>
+              </div>
+
+                </div><!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <button type="submit" class="btn btn-sm btn-info btn-flat btn-success pull-left">Update</button>
+                    <a href="#" class="btn btn-sm  btn-flat pull-right">Cancel</a>
+                </div><!-- /.box-footer -->
+            }
+
+        }
+    </div><!-- /.box -->
+</div>
+
+
+@section scripts
+{
+    <script>
+
+
+        function SaveDetails(e) {
+            var TextDOB = $("#TextDOB").val();
+            $("#HiddenDOB").val(TextDOB);
+            e.parentElement.parentElement.submit();
+        }
+
+        $(document).ready(function () {
+            //var HiddenDOB = $("#HiddenDOB").val();
+            //$("#TextDOB").val(HiddenDOB);
+        });
+
+
+        $('#DateTimePicker1').datepicker(
+            {
+                dateFormat: 'dd-mm-yy',
+                minDate: '+5d',
+                changeMonth: true,
+                changeYear: true,
+
+            }).on('changeDate', function (e) {
+                $(this).datepicker('hide');
+
+            });
+
+    </script>
+
+
+
+}

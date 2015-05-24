@@ -1,0 +1,224 @@
+﻿@model abc.Models.Qualification
+@{
+    ViewBag.Title = "ShowQualification";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="col-md-12">
+    <!-- TABLE: LATEST ORDERS -->
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Qualification Information</h3>
+            <div class="box-tools pull-right">
+                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+            <div class="table-responsive">
+                <table class="table no-margin">
+                    <thead>
+                        <tr>
+                            <th>Education Category</th>
+                            <th>Sub Type</th>
+                            <th>Stream</th>
+                            <th>Board/University</th>
+                            <th>Passing Year</th>
+                            <th>Percentage</th>
+                            <th>Edit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (ViewBag.GetQualificationData == null)
+                        {
+                            <text>Please Enter Qualification Information</text>
+                        }
+                        else
+                        {
+                            foreach (var item in ViewBag.GetQualificationData)
+                            {
+
+                                <tr>
+                                    <td>@item.EducationCategory.Education_CategoryName</td>
+                                    <td>@item.EducationType.EducationType_Name</td>
+                                    <td>@item.EducationSubType.EducationSubType_Name</td>
+                                    <td> @item.Qualification_BoardUniversity</td>
+                                    <td>@item.Qualification_PassingYear</td>
+                                    <td>@item.Qualification_Percentage</td>
+                                    <th>
+                                        @{
+                                using (@Html.BeginForm("EditQualification", "RecruitmentZone", FormMethod.Post))
+                                {
+                                    <input type="hidden" id="QRId" name="Qualification_RegistrationId" value="@item.Qualification_RegistrationId" />
+                                            <input type="hidden" id="Qid" name="Qualification_Id" value="@item.Qualification_Id" />
+                                            <input type="submit" class="btn btn-default btn-sm" value="Edit" />
+                                }
+                                        }
+
+
+                                    </th>
+                                </tr>
+
+
+                            }
+
+                        }
+                    </tbody>
+
+
+                </table>
+            </div><!-- /.table-responsive -->
+        </div><!-- /.box-body -->
+        <div class="box-footer clearfix">
+            <a href="#" class="btn btn-sm btn-info btn-flat pull-left" data-toggle="modal" data-target="#Q-modal">Add Qualification <i class="fa fa-plus"></i></a>
+            <a href="#" class="btn btn-sm btn-default btn-flat pull-right">Cancel</a>
+        </div><!-- /.box-footer -->
+    </div><!-- /.box -->
+</div>
+
+
+
+<!---Modal--->
+<div class="Qualification-information">
+    <div class="modal modal-primary modal fade" tabindex="-1" id="Q-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="personal-information">Education Qualification</h4>
+                </div>
+
+
+                @{
+                    using (@Html.BeginForm("SaveQualificationInformation", "RecruitmentZone", FormMethod.Post, new { @class = "form-horizontal" }))
+                    {
+
+                        <div class="modal-body">
+
+                            <fieldset>
+                                <legend>Education Qualification</legend>
+
+                            </fieldset>
+                            <br />
+                            <div class="form-group">
+                                <label for="EducationType" class="col-sm-3 control-label">Education Category</label>
+                                <div class="col-sm-9">
+                                    @Html.HiddenFor(d => d.Qualification_Id)
+                                    @Html.HiddenFor(d => d.Qualification_RegistrationId)
+                                    @Html.DropDownListFor(d => d.Qualification_EducationCategoryId, (List<SelectListItem>)ViewBag.GetEducationCategoryDropDownData, new { @class = "form-control", @id = "GetEducationCategoryDropDownData" })
+                                    <br />
+                                    @*<input type="button" class="btn btn-primary btn-lg " name="name" value="Submit " />*@
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="EducationType" class="col-sm-3 control-label">Education Type</label>
+                                <div class="col-sm-9">
+                                    @Html.DropDownListFor(d => d.Qualification_EducationTypeId, new SelectList(Enumerable.Empty<SelectListItem>(), "EducationSubType_EducationTypeId", "EducationType.EducationType_Name"), "--Please Select--", new { @class = "form-control", @id = "GetEducationTypeDropDownData" })
+                                  
+                                    <br />
+                                    @*<input type="button" class="btn btn-primary btn-lg " name="name" value="Submit " />*@
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="Stream" class="col-sm-3 control-label">Stream Type</label>
+                                <div class="col-sm-9">
+                                   @Html.DropDownListFor(d => d.Qualification_EducationSubTypeId, new SelectList(Enumerable.Empty<SelectListItem>(), "EducationSubType_Id", "EducationSubType_Name"), "-Please Select-", new { @class = "form-control", @id = "GetSubEducationTypeDropDownData" })
+                                    <br />
+                                    @*<input type="button" class="btn btn-primary btn-lg " name="name" value="Submit " />*@
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="BoardAndUniversity" class="col-sm-3 control-label">Board/University</label>
+                                <div class="col-sm-9">
+                                    @*<input type="text" name="Qualification_Percentage" value="@Model.Qualification_Percentage" class="form-control" id="Qualification_Percentage" />*@
+                                    @Html.TextBoxFor(d => d.Qualification_BoardUniversity, new { @class = "form-control", @id = "BoardAndUniversity" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="PassingYear" class="col-sm-3 control-label">Passing Year</label>
+                                <div class="col-sm-9">
+                                    @*<input type="text" name="Qualification_PassingYear" value="@Model.Qualification_PassingYear " id="PassingYear" class="form-control" />*@
+                                    @Html.TextBoxFor(d => d.Qualification_PassingYear, new { @id = "PassingYear", @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="Percentage" class="col-sm-3 control-label">Percentage</label>
+                                <div class="col-sm-9">
+                                    @*<input type="text" name="Qualification_Percentage" value="@Model.Qualification_Percentage" class="form-control" id="Qualification_Percentage" />*@
+                                    @Html.TextBoxFor(d => d.Qualification_Percentage, new { @class = "form-control", @id = "Qualification_Percentage" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline pull-left " aria-hidden="true" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-outline">Save changes<i class="fa fa-save"></i></button>
+                        </div>
+                    }
+                }
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            var Id = $("#EducationSubType_Id").val();
+            
+            $("#GetEducationCategoryDropDownData").on('change', function ()
+            {
+                if ($("#GetEducationCategoryDropDownData").val() != 0)
+                {
+                    var EcID = $(this).val();
+
+                    $.getJSON("/Admin/LoadEducationTypeByEducationCategory", { EducationCategoryId: EcID },
+                           function (data)
+                           {
+                               var select = $("#GetEducationTypeDropDownData");
+                               select.empty();
+                               select.append($('<option/>',
+                                {
+                                   value: 0,
+                                   text: "-Please Select-"
+                               }));
+                               $.each(data, function (index, EducationTypeData)
+                               {
+                                   select.append($('<option/>',
+                                    {
+                                       value: EducationTypeData.Value,
+                                       text: EducationTypeData.Text
+                                   }));
+                               });
+                           });
+                }
+            });
+
+            $("#GetEducationTypeDropDownData").on('change', function () {
+                if ($("#GetEducationTypeDropDownData").val() != 0) {
+                    var EcID = $(this).val();
+
+                    $.getJSON("/Admin/LoadSubTypeByEducationType", { SubEducationCategoryId: EcID },
+                           function (data) {
+                               var select = $("#GetSubEducationTypeDropDownData");
+                               select.empty();
+                               select.append($('<option/>',
+                                {
+                                    value: 0,
+                                    text: "-Please Select-"
+                                }));
+                               $.each(data, function (index, EducationSubTypeData) {
+                                   select.append($('<option/>',
+                                    {
+                                        value: EducationSubTypeData.Value,
+                                        text: EducationSubTypeData.Text
+                                    }));
+                               });
+                           });
+                }
+            });
+
+        });
+    </script>
+}

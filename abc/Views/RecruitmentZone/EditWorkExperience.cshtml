@@ -1,0 +1,138 @@
+﻿@model abc.Models.WorkExperience
+@{
+    ViewBag.Title = "EditWorkExperience";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="page-wrapper">
+    <div class="container-fluid">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="personal-information">Work Experience</h4>
+                </div>
+
+                <div class="panel-body">
+                    @{
+                        using (@Html.BeginForm("SaveWorkExperienceInformation", "RecruitmentZone", FormMethod.Post, new { @class = "form-horizontal" }))
+                        {
+                            <fieldset>
+                                <legend>Work Experience Information</legend>
+
+                            </fieldset>
+                            <br />
+                            @Html.HiddenFor(d=>d.WorkExperience_Id)
+                        <div class="form-group">
+                                <label for="WorkExperience_CompanyName" class="col-sm-3 control-label">Company Name</label>
+                                <div class="col-sm-9">
+                                    @Html.TextBoxFor(d => d.WorkExperience_CompanyName, new { @class = "form-control", @id = "WorkExperience_CompanyName" })
+                                </div>
+                            </div>
+                        <div class="form-group">
+                                <label for="WorkExperience_Designation" class="col-sm-3 control-label">Designation</label>
+                                <div class="col-sm-9">
+                                    @Html.TextBoxFor(d => d.WorkExperience_Designation, new { @class = "form-control", @id = "WorkExperience_Designation" })
+                                </div>
+                            </div>
+                        <div class="form-group">
+                            <label for="date-picker-2" class="control-label col-sm-3">From Date</label>
+                            <div id="DateTimePicker1"class="input-append date col-sm-9" >                                                                                                                          
+                                <div class="input-group" >
+                                    <input type="hidden" name="WorkExperience_FromDate" value="@Model.WorkExperience_FromDate" id="HiddenFromDate" />
+                                    <input type="text" style="color:black" id="TextFromDate"data-format="DD-MM-YYYY" disabled="disabled" class="form-control" />
+                                    <div class="input-group-addon">
+                                          <i class="fa fa-calendar"></i>
+                                    </div>
+                                </div>                       
+                           </div>
+                       </div>
+                        <div class="form-group">
+                            <label for="date-picker-2" class="control-label col-sm-3">To Date</label>
+                            <div id="DateTimePicker2"class="input-append date col-sm-9" >                                                                                                                          
+                                <div class="input-group" >
+                                    <input type="hidden" name="WorkExperience_ToDate" value="@Model.WorkExperience_ToDate" id="HiddenToDate" />
+                                    <input type="text" style="color:black" id="TextToDate"data-format="DD-MM-YYYY" disabled="disabled" class="form-control" />
+                                    <div class="input-group-addon">
+                                          <i class="fa fa-calendar"></i>
+                                    </div>
+                                </div>                       
+                           </div>
+                       </div>
+                        
+                        
+                           
+                            <div class="form-group">
+                                <label for="Percentage" class="col-sm-3 control-label">Percentage</label>
+                                <div class="col-sm-9">
+                                    @*<input type="text" name="Qualification_Percentage" value="@Model.Qualification_Percentage" class="form-control" id="Qualification_Percentage" />*@
+                                    @Html.TextAreaFor(d => d.WorkExperience_Address, new { @class = "form-control", @id = "WorkExperience_Address" })
+                                </div>
+                            </div>
+                            <br />
+                            <div class="form-group">
+                                <div class="col-sm-3">
+                                    <button type="submit" class="btn btn-lg btn-primary">Save changes</button>
+                                </div>
+
+                                <div class="col-sm-3">
+                                    <button type="button" class="btn btn-lg btn-default" onclick="location.href='@Url.Action("ShowWorkExperienceInformation", "RecruitmentZone")'">Cancel</button>
+                                </div>
+                            </div>
+                        }
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+
+
+        function SaveDetails(e) {
+            var TextFrom = $("#TextFromDate").val();
+            var TextTo = $("#TextToDate").val();
+            $("#HiddenFromDate").val(TextFrom);
+            $("#HiddenToDate").val(TextTo);
+            e.parentElement.parentElement.submit();
+        }
+
+        $(document).ready(function () {
+            var HiddenFrom=$("#HiddenFromDate").val();
+            var HiddenTo=$("#HiddenToDate").val();
+            $("#TextFromDate").val(HiddenFrom);
+            $("#TextToDate").val(HiddenTo);
+        });
+
+        $('#DateTimePicker1').datepicker(
+            {
+                dateFormat: 'dd-mm-yy',
+                minDate: '+5d',
+                changeMonth: true,
+                changeYear: true,
+
+            }).on('changeDate', function (e) {
+                $(this).datepicker('hide');
+
+            });
+        $('#DateTimePicker2').datepicker(
+            {
+                dateFormat: 'dd-mm-yy',
+                minDate: '+5d',
+                changeMonth: true,
+                changeYear: true,
+
+            }).on('changeDate', function (e) {
+                $(this).datepicker('hide');
+
+            });
+
+
+    </script>
+
+
+
+}

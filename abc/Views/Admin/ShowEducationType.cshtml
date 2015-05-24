@@ -1,0 +1,139 @@
+﻿@model abc.Models.EducationType
+
+@{
+    ViewBag.Title = "EducationType";
+    Layout = "~/Views/Shared/_LayoutPageAdmin.cshtml";
+}
+
+<div class="col-md-12">
+    <!-- TABLE: LATEST ORDERS -->
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Education Type</h3>
+            <div class="box-tools pull-right">
+                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+            <div class="table-responsive">
+                <table class="table no-margin">
+                    <thead>
+                    <tr>
+                            <th>Education Category</th>
+                            <th>Education Type</th>
+                            <th>Status</th>
+                            <th>Edit Education Type</th>
+                            <th>Education Status</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                  @if (ViewBag.GetEducationTypeData == null)
+                  {        <tr>
+                               <td>Please Enter Some Education Type</td>
+                           </tr>
+                  }
+                  else
+                  {
+                      foreach (var item in ViewBag.GetEducationTypeData)
+                      { 
+                 
+                        <tr>
+                          
+                            <td>@item.EducationCategory.Education_CategoryName</td>
+                            <td>@item.EducationType_Name</td>
+                            <td>@item.EducationType_Status</td>
+                            <td>
+                                @{
+                         
+                                    using (
+                              @Html.BeginForm("EditEducationType", "Admin", FormMethod.Post))
+                          {  
+                                        
+                           <input type="hidden" name="EducationType_Id" id="EducationType_Id" value="@item.EducationType_Id" />
+                                    <input type="submit" class="btn btn-default btn-sm"  value="Edit " />
+
+                          }
+                                }
+                            </td>
+
+                            <td>
+                                @{
+                          using (@Html.BeginForm("ChangeEducationTypeStatus","Admin",FormMethod.Post, new { @class = "form-horizontal" }))
+                          {
+                               
+                                 <input type="hidden" name="EducationType_Id" id="EducationType_Id" value="@item.EducationType_Id" />
+                                    <input type="submit" class="btn btn-default btn-sm"  value="Toggle " />
+                                    
+                          }
+                                }
+                            </td>
+
+                            
+                        </tr>
+                      }
+                  }
+                    </tbody>
+                </table>
+            </div><!-- /.table-responsive -->
+        </div><!-- /.box-body -->
+        <div class="box-footer clearfix">
+            <a href="#" class="btn btn-sm btn-info btn-flat btn-success pull-left" data-toggle="modal" data-target="#EducationType-modal">Add Qualification</a>
+            <a href="#" class="btn btn-sm btn-success btn-flat pull-right">Cancel</a>
+        </div><!-- /.box-footer -->
+    </div><!-- /.box -->
+</div>
+
+
+
+<!---Modal--->
+<div class="EducationType-information">
+    <div class="modal modal-success modal fade" tabindex="-1" id="EducationType-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="JobOpening-information">Education Type Information </h4>
+                </div>
+@{
+    using (@Html.BeginForm("SaveEducationType","Admin",FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+                <div class="modal-body">
+                    
+                        <fieldset>
+                            <legend>Education Type</legend>
+
+                        </fieldset>
+                        <br />
+                        
+                    <div class="form-group">
+                        <label for="EducationType_Name" class="col-sm-3 control-label">Basic Education</label>
+                        <div class="col-sm-9">
+                            @Html.HiddenFor(d => d.EducationType_Id)
+                            @Html.DropDownListFor(d => d.EducationType_EducationCategoryId, (List<SelectListItem>)ViewBag.GetEducationCategoryDropDownData, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                        <div class="form-group">
+                            <label for="EducationType_Name" class="col-sm-3 control-label">Basic Education</label>
+                            <div class="col-sm-9">
+                                <input type="text" name="EducationType_Name" value="@Model.EducationType_Name " id="EducationType_Name" class="form-control" />
+                            </div>
+                        </div>
+                      
+
+           
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline btn-success pull-left " aria-hidden="true" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-outline">Save changes</button>
+                </div>
+}}
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div>
+
+
+

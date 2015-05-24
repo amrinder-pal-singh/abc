@@ -1,0 +1,208 @@
+﻿@model abc.Models.WorkExperience
+@{
+    ViewBag.Title = "ShowQualification";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<style>
+    .datepicker {
+        z-index: 10000 !important;
+    }
+</style>
+
+<div class="col-md-12">
+    <!-- TABLE: LATEST ORDERS -->
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Work Experience Information</h3>
+            <div class="box-tools pull-right">
+                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+            <div class="table-responsive">
+                <table class="table no-margin">
+                    <thead>
+                        <tr>
+                            <th>Company Name</th>
+                            <th>Designation</th>
+                            <th>From Date</th>
+                            <th>To Date</th>
+                            <th>Address</th>
+                            <th>Edit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (ViewBag.GetWorkExperienceData == null)
+                        {
+                            <text>Please Enter Qualification Information</text>
+                        }
+                        else
+                        {
+                            foreach (var item in ViewBag.GetWorkExperienceData)
+                            {
+                                <tr>
+                                    <td>@item.WorkExperience_CompanyName</td>
+                                    <td>@item.WorkExperience_Designation</td>
+                                    <td>@item.WorkExperience_FromDate</td>
+                                    <td>@item.WorkExperience_ToDate</td>
+                                    <td>@item.WorkExperience_Address</td>
+                                    <th>
+                                        @{
+                                            using (Html.BeginForm("EditWorkExperience", "RecruitmentZone", FormMethod.Post))
+                                            {                                                                                
+                                                <input type="hidden" id="Wid" name="WorkExperience_Id" value="@item.WorkExperience_Id" />
+                                                <input type="submit" class="btn btn-default btn-sm" value="Edit" />
+                                            }
+                                        }
+                                    </th>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+
+
+                </table>
+            </div><!-- /.table-responsive -->
+        </div><!-- /.box-body -->
+        <div class="box-footer clearfix">
+            <a href="#" class="btn btn-sm btn-info btn-flat pull-left" data-toggle="modal" data-target="#Q-modal">Add Work Experience <i class="fa fa-plus"></i></a>
+            <a href="#" class="btn btn-sm btn-default btn-flat pull-right">Cancel</a>
+        </div><!-- /.box-footer -->
+    </div><!-- /.box -->
+</div>
+
+
+
+<!---Modal--->
+<div class="Qualification-information">
+    <div class="modal modal-primary modal fade" tabindex="-1" id="Q-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="personal-information">Work Experience Information</h4>
+                </div>
+
+
+                @{
+                    using (@Html.BeginForm("SaveWorkExperienceInformation", "RecruitmentZone", FormMethod.Post, new { @class = "form-horizontal" }))
+                    {
+                        @Html.HiddenFor(d=>d.WorkExperience_Id)
+                        <div class="modal-body">
+
+                            <fieldset>
+                                <legend>Work Experience Information</legend>
+
+                            </fieldset>
+                            <br />
+                            
+
+                            
+
+                            <div class="form-group">
+                                <label for="CompanyName" class="col-sm-3 control-label">Company Name</label>
+                                <div class="col-sm-9">
+                                   
+                                    @Html.TextBoxFor(d => d.WorkExperience_CompanyName, new { @class = "form-control", @id = "CompanyName" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="Designation" class="col-sm-3 control-label">Designation</label>
+                                <div class="col-sm-9">
+                                    @*<input type="text" name="Qualification_PassingYear" value="@Model.Qualification_PassingYear " id="PassingYear" class="form-control" />*@
+                                    @Html.TextBoxFor(d => d.WorkExperience_Designation, new { @id = "Designation", @class = "form-control" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="date-picker-2" class="control-label col-sm-3">From Date</label>
+                                <div id="DateTimePicker1" class="input-append date col-sm-9">
+                                    <div class="input-group">
+                                        <input type="hidden" name="WorkExperience_FromDate" value="@Model.WorkExperience_FromDate" id="HiddenDOB" />
+                                        <input type="text" style="color:black" id="TextDOB" data-format="DD-MM-YYYY" disabled="disabled" class="form-control" />
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="date-picker-2" class="control-label col-sm-3">To Date</label>
+                                <div id="DateTimePicker2" class="input-append date col-sm-9">
+                                    <div class="input-group">
+                                        <input type="hidden" name="WorkExperience_ToDate" value="@Model.WorkExperience_ToDate" id="HiddenDOB" />
+                                        <input type="text" style="color:black" id="TextDOB" data-format="DD-MM-YYYY" disabled="disabled" class="form-control" />
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="CompanyName" class="col-sm-3 control-label">Company Name</label>
+                                <div class="col-sm-9">
+
+                                    @Html.TextAreaFor(d => d.WorkExperience_Address, new { @class = "form-control", @id = "WorkExperience_Address" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline pull-left " aria-hidden="true" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-outline">Save changes</button>
+                        </div>
+                    }
+                }
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div>
+
+
+@section scripts
+{
+    <script>
+
+
+        function SaveDetails(e) {
+            var TextDOB = $("#TextDOB").val();
+            $("#HiddenDOB").val(TextDOB);
+            e.parentElement.parentElement.submit();
+        }
+
+        $(document).ready(function () {
+            var HiddenDOB = $("#HiddenDOB").val();
+            $("#TextDOB").val(HiddenDOB);
+        });
+
+
+        $('#DateTimePicker1').datepicker(
+            {
+                dateFormat: 'dd-mm-yy',
+                minDate: '+5d',
+                changeMonth: true,
+                changeYear: true,
+
+            }).on('changeDate', function (e) {
+                $(this).datepicker('hide');
+
+            });
+        $('#DateTimePicker2').datepicker(
+                {
+                    dateFormat: 'dd-mm-yy',
+                    minDate: '+5d',
+                    changeMonth: true,
+                    changeYear: true,
+
+                }).on('changeDate', function (e) {
+                    $(this).datepicker('hide');
+
+                });
+
+    </script>
+
+
+
+}
